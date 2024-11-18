@@ -66,8 +66,7 @@ namespace LabCorpAutomation.Steps
             labCorpPage.ClickApply();
 
             driver.SwitchTo().Window(driver.WindowHandles.First());
-            //var title = driver.Title;
-           
+            //var title = driver.Title;         
 
         }
 

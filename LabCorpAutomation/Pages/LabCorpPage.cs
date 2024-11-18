@@ -14,7 +14,8 @@ namespace LabCorpAutomation.Pages
         }
 
         #region Elements
-        IWebElement career => driver.FindElement(By.XPath("//div[@id='login-container']//li//a[contains(@href,'career')]"));
+        IWebElement career => driver.FindElement(By.XPath("//ul[@id='alantesting']//li//span[contains(text(),'Careers')]"));
+        IWebElement acceptCookies => driver.FindElement(By.XPath("//button[@id='onetrust-accept-btn-handler']"));     
         IWebElement searchInput => driver.FindElement(By.XPath("//input[@id='typehead']"));
         IWebElement searchButton => driver.FindElement(By.XPath("//button[@id='ph-search-backdrop']"));
         IWebElement jobCategory => driver.FindElement(By.XPath(" //p[@class='job-info']//span[@class='job-category']"));
@@ -30,19 +31,27 @@ namespace LabCorpAutomation.Pages
         #endregion
 
         #region Methods
-
+        public void SwitchToLastWindow(string lastWindow)
+        {
+            driver.SwitchTo().Window(lastWindow);
+        }
+        public string GetLastWindow()
+        {
+            return driver.WindowHandles.Last().ToString();
+        }
        
         public void ClickCareerLink()
         {
             wait.Until(ExpectedConditions.ElementToBeClickable(career));
+            acceptCookies.Click();
             career.Click();
         }
 
         public void SearchJob(string jobTitle)
         {
+            SwitchToLastWindow(GetLastWindow());
             searchInput.SendKeys(jobTitle);
             searchButton.Click();
-
         }
         public string GetJobCategory()
         {
